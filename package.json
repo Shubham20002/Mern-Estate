@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "serve":"nodemon api/index.js",
-    "start":"node api/index.js"
+    "serve": "nodemon api/index.js",
+    "start": "node api/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/Shubham20002/Mern-Estate#readme",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "mongoose": "^8.8.1",
     "nodemon": "^3.1.7"
   }
 }
