@@ -1,6 +1,25 @@
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { signOutUserStart,signOutUserSuccess,signOutUserFailure } from '../redux/user/userslice';
 export default function Header() {
+    const { currentUser } = useSelector((state) => state.user);
+    const dispatch=useDispatch();
+    const handleSignOut = async () => {
+        try {
+          dispatch(signOutUserStart())
+          const res = await fetch('/api/auth/signout');
+          const data = await res.json();
+          if (data.success === false) {
+            dispatch(signOutUserFailure(data.message));
+            return;
+          }
+          dispatch(signOutUserSuccess(data));
+        } catch (error) {
+          dispatch(signOutUserFailure(data.message));
+        }
+      }
   return (
     <header className='bg-slate-200 shadow-md'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
@@ -29,8 +48,21 @@ export default function Header() {
               About
             </li>
           </Link>
-          <Link to='/signin'>
-            <li className=' text-slate-700 hover:underline'> Sign in</li>
+          <Link to='/profile'>
+            {currentUser ? (
+              <img className='rounded-full h-7 w-7 object-cover' src={currentUser.avatar} alt='profile' />
+              
+            ) : (
+              <li className=' text-slate-700 hover:underline'> Sign in</li>
+            )}
+          </Link>
+
+          <Link to='/profile'>
+            {currentUser ? (
+               <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign out</span>
+            ) : (
+              null
+            )}
           </Link>
        
         </ul>
