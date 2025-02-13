@@ -1,11 +1,4 @@
 import { useState } from 'react';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,8 +29,7 @@ export default function CreateListing() {
     if (files.length > 0 && files.length + formData.imageUrls.length <= 6) {
       setUploading(true);
       setImageUploadError(false);
-  
-      // Convert FileList to an array before using .map()
+       // Convert FileList to an array before using .map()
       const fileArray = Array.from(files);
       const promises = fileArray.map((file) => storeImage(file));
   
